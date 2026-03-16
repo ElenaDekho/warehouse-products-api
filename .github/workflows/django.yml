@@ -31,5 +31,17 @@ jobs:
         cd stocks_products
         python manage.py test
     - name: Deploy to server
-      run: |
-        echo "Здесь будет деплой"
+      uses: appleboy/ssh-action@v1.2.2
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+          cd /root/warehouse-products-api
+          git pull origin main
+          cd stocks_products
+          source venv/bin/activate
+          pip install -r requirements.txt
+          python manage.py migrate
+          systemctl restart gunicorn
+          systemctl restart nginx
