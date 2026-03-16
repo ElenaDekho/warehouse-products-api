@@ -30,3 +30,6 @@ jobs:
       run: |
         cd stocks_products
         python manage.py test
+    - name: Deploy to server
+      run: |
+        echo "Здесь будет деплой"
