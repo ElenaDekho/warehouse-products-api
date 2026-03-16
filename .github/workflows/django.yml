@@ -21,10 +21,9 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Change to project directory
-      run: cd stocks_products
     - name: Install Dependencies
       run: |
+        cd stocks_products
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
